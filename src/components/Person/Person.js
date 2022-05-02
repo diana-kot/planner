@@ -14,7 +14,7 @@ class Person {
     let htmlContentTask = "";
 
    
-    const startDate = new Date("2022-01-01");
+    const startDate = new Date();
     const endDate = new Date("2023-01-01");
 
     const now = new Date();
@@ -48,7 +48,7 @@ class Person {
   // }
 
 
-    const d = new Date("2022-01-01");
+    const d = new Date();
     for (let p = 0; p < 7; p++) {
       d.setDate(d.getDate() + 1); 
       arrDate[p] = dateFilter.dateFormat(new Date(+d));
@@ -74,41 +74,36 @@ class Person {
 
     const task = tasks.filter(({ executor }) => executor !== null);
    
-
-    
     let result = executors.reduce((r,v) => (id.includes(v) ? r.repeating.push(v) : r.unique.push(v), r), {unique:[], repeating:[]});
 
     
     let output = result.unique.concat(result.repeating).filter((el)=> el !== null )
 
-    console.log(output);
-  
 
-   task.forEach(({ executor, planEndDate }) => {
-      // executor === id && planEndDate === arrDate.el;
-      // && arrDate.filter (e=>e=== dateFilter.dateFormat(planEndDate) ))
+    function getTasks(userId, currendDate)
+    {
+      htmlContentTask = ``
+    task.forEach(({ executor, planStartDate, planEndDate }) => {
+    if (userId === executor && 
+       currendDate>=dateFilter.dateFormat(planStartDate) && 
+       currendDate<=dateFilter.dateFormat(planEndDate)) {
 
-    
-
-
-     if (id.forEach((el)=> el === executors) ) {
-
-      console.log(id);
-      console.log(executors);
       htmlContentTask += `
       <div class="task__template">
           <article class="backlog__box" id="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" data-info="" data-start-date="" data-task-week="">
             <h4 class="backlog__box-name"></h4>
-            <p class="backlog__box-text">${`Зa ${executor}`}</p>
-           
+            <p class="backlog__box-text">${`Зaдача ${executor}`}</p>
+          
           </article>
       </div>
       `;
-     } else {
+    } else {
       htmlContentTask += ``
-     }
+    }
 
     });
+    return htmlContentTask
+  }
 
     persons.forEach(({ id, firstName }) => {
       htmlContent += `
@@ -116,14 +111,13 @@ class Person {
         <div class="person__name">
         ${id}  ${firstName}
         </div>
-        <div class="person__task">${htmlContentTask}</div>
-        <div class="person__task">${htmlContentTask}</div>
-        <div class="person__task">${htmlContentTask}</div>
-        <div class="person__task">${htmlContentTask}</div>
-        <div class="person__task">${htmlContentTask}</div>
-        <div class="person__task">${htmlContentTask}</div>
-        <div class="person__task">${htmlContentTask}</div>
-        <div class="table__date"></div>
+        <div class="person__task">${getTasks(id, arrDate[0])}</div>
+        <div class="person__task">${getTasks(id, arrDate[1])}</div>
+        <div class="person__task">${getTasks(id, arrDate[2])}</div>
+        <div class="person__task">${getTasks(id, arrDate[3])}</div>
+        <div class="person__task">${getTasks(id, arrDate[4])}</div>
+        <div class="person__task">${getTasks(id, arrDate[5])}</div>
+        <div class="person__task">${getTasks(id, arrDate[6])}</div>
     </div>
       `;
     });

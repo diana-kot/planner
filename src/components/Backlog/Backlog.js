@@ -19,7 +19,7 @@ class Backlog {
           htmlContent += `
           <li class="backlog__item">
               <span class="backlog__name">${subject}</span>
-              <p>${planEndDate}</p>
+              <p>${planStartDate}</p>
           </li>
           `;
         } else {

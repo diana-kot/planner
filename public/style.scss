@@ -1,0 +1,40 @@
+$widthSite: 1140px;
+$widthSiteSml: 736px;
+$maxWidth: 1180px;
+
+body {
+  height: 100%;
+  line-height: 1;
+}
+
+.wrapper__container {
+  flex: 1 1 auto;
+}
+
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  padding-left: calc(40% - #{$maxWidth / 2});
+  padding-right: calc(40% - #{$maxWidth / 2});
+  padding-top: 50px;
+
+}
+
+.comics__container {
+  display: flex;
+}
+
+.main {
+  flex: 1 1 auto;
+  border: 1px solid red;
+}
+
+.app-page {
+  display: flex;
+  justify-content: space-between;
+}

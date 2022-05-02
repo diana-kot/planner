@@ -1,19 +1,22 @@
-import { API_URL, URL_TASK } from "../../constants/api";
 import { ROOT_BACKLOG } from "../../constants/root";
-import { getDataApi } from "../../utils/getDataApi";
 
 import "./Backlog.scss";
 
 class Backlog {
+  constructor() {
+    this.tasks = [];
+  }
 
-
+  setTasks(tasks)
+  {
+    this.tasks = tasks
+  }
 
   async render() {
-    const data = await getDataApi.getData(API_URL + URL_TASK);
-
+    
     let htmlContent = "";
 
-    data.forEach(
+    this.tasks.forEach(
       ({ id, subject, description, executor, creationDate, planStartDate, planEndDate, endDate }) => {
         if(!executor){
           htmlContent += `

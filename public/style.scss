@@ -8,7 +8,7 @@ body {
 }
 
 .wrapper__container {
-  flex: 1 1 auto;
+  display: flex;
 }
 
 .wrapper {
@@ -38,3 +38,15 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+.root {
+  display: flex;
+  min-width: 75%;
+}
+
+.backlog {
+  display: flex;
+  min-width: 75%;
+}
+
+

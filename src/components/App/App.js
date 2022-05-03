@@ -14,6 +14,7 @@ class App {
       // запрос к api tasks
       const tasks = await getDataApi.getData(API_URL + URL_TASK);
 
+      let dragged
       Person.setPersons(persons)
 
       let backlogTasks = []

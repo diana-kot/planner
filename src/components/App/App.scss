@@ -17,3 +17,23 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.selected {
+  opacity: 0.6;
+}
+
+.hide {
+  display: none;
+}
+
+.hovered {
+  background-color: #228B22;
+  opacity: 0.2;
+}
+
+.block{
+  display: flex;
+}
+
+.none{
+  display: none;
+}

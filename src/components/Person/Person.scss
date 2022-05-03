@@ -6,6 +6,8 @@
 
 .person__container {
   display: flex;
+  flex: 1 1 auto;
+  min-width: 75%;
   flex-direction: column;
   list-style: none;
   margin-top: 40px;
@@ -78,3 +80,9 @@
     color: #fff;
   }
 }
+
+
+.selected {
+  opacity: 0.6;
+}
+

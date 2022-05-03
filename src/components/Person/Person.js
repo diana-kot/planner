@@ -102,7 +102,7 @@ class Person {
     // }
     htmlContentDate = this.renderDates();
     // this.arrDate.forEach((el) => {
-    //   htmlContentDate += `  
+    //   htmlContentDate += `
     //             <li class="table__date">
     //               ${dateFilter.dateFormat(el)}
     //             </li>
@@ -120,13 +120,13 @@ class Person {
           <div class="person__name">
           ${firstName}
           </div>
-          <div class="person__task">${this.getTasks(id, this.arrDate[0])}</div>
-          <div class="person__task">${this.getTasks(id, this.arrDate[1])}</div>
-          <div class="person__task">${this.getTasks(id, this.arrDate[2])}</div>
-          <div class="person__task">${this.getTasks(id, this.arrDate[3])}</div>
-          <div class="person__task">${this.getTasks(id, this.arrDate[4])}</div>
-          <div class="person__task">${this.getTasks(id, this.arrDate[5])}</div>
-          <div class="person__task">${this.getTasks(id, this.arrDate[6])}</div>
+          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[0])}</div>
+          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[1])}</div>
+          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[2])}</div>
+          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[3])}</div>
+          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[4])}</div>
+          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[5])}</div>
+          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[6])}</div>
       </div>
       `;
     });
@@ -155,33 +155,58 @@ class Person {
     ROOT_PERSON.innerHTML = htmlWrapper;
   }
 
-  // renderDate(date) {
-  //   const d = new Date();
-  //   for (let p = 0; p < 7; p++) {
-  //     d.setDate(d.getDate() + 1);
-  //     this.arrDate[p] = dateFilter.dateFormat(new Date(+d));
-  //   }
-  // }
-
-  rerenderDate() {
-    const calendarUsers = document.querySelectorAll(".table__date");
-    Array.from(calendarUsers).forEach((element) => {
-      let calendarUsersTask = element.querySelectorAll(".person__task");
-      Array.from(calendarUsersTask).forEach((item, i) => {
-        item.id = "user" + element.id + "-" + this.arrDate[day + i];
-      });
-    });
-    console.log(333);
-  }
-
-  eventListener() {
+  dragoverPersonTask() {
     document.querySelectorAll(".person__task").forEach((element) => {
-      element.addEventListener("click", () => {
-        // Characters.render(uri);
-        console.log(1);
+      element.addEventListener("dragover", (e) => {
+        e.preventDefault();
       });
     });
   }
+
+  dropPersonTask() {
+    document.querySelectorAll(".person__task").forEach((element) => {
+      element.addEventListener("drop", (e) => {
+        e.preventDefault();
+        // const currentTask =
+
+
+        let idItem = e.dataTransfer.getData("id");
+        console.log(idItem);
+        e.target.classList.remove("hovered");
+       
+        e.target.append(document.querySelectorAll(".person__task"))
+      });
+    });
+  }
+
+  dragstartTasks() {
+    document.querySelectorAll(".person__task").forEach((e) => {
+      e.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData('id', e.target.id)
+        
+        e.target.classList.add("selected");
+      });
+    });
+  }
+
+  dragenterTasks() {
+    document.querySelectorAll(".person__task").forEach((e) => {
+      e.addEventListener("dragenter", (e) => {
+       
+        e.target.classList.add("hovered");
+      });
+    });
+  }
+
+  dragleaveTasks() {
+    document.querySelectorAll(".person__task").forEach((e) => {
+      e.addEventListener("dragleave", (e) => {
+       
+        e.target.classList.remove("hovered");
+      });
+    });
+  }
+
 
   eventListenerButtonPrev() {
     document
@@ -194,7 +219,7 @@ class Person {
         // this.renderDates();
         console.log(startDate.toISOString().slice(0, 10));
         this.render(startDate);
-        
+        this.setTasks(this.tasks);
       });
   }
 
@@ -208,47 +233,9 @@ class Person {
       console.log(startDate.toISOString().slice(0, 10));
 
       this.render(startDate);
-    
+      this.setTasks(this.tasks);
     });
   }
-
-  // eventListenerButton() {
-
-  //   const previousWeekBtn = document.getElementById("previous-button");
-  //   const nextWeekBtn = document.getElementById("next-button");
-
-  //   previousWeekBtn.addEventListener("click", () => {
-
-  //     console.log(this.arrDate[0]);
-
-  //     let startDate = new Date();
-  //     startDate.setDate(this.arrDate[0].getDate() - 7);
-
-  //     console.log(startDate.toISOString().slice(0,10));
-
-  //     this.render(startDate);
-
-  //     console.log(1);
-  //   });
-
-  //   nextWeekBtn.addEventListener("click", () => {
-
-  //     let startDate = new Date();
-  //     startDate.setDate(this.arrDate[0].getDate() + 7);
-
-  //     console.log(startDate.toISOString().slice(0,10));
-
-  //     this.render(startDate);
-  //   });
-
-  // document.querySelectorAll(".person__item").forEach((el) => {
-  //   el.addEventListener("click", () => {
-  //     element.addEventListener("click", () => {
-  //       console.log(1);
-  //     });
-  //   });
-  // });
-  //}
 }
 
 export default new Person();

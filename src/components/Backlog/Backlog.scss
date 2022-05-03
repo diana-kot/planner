@@ -7,20 +7,23 @@
 
 .backlog__form {
   position: relative;
-  width: 300px;
+  max-width: 300px;
   margin: 0 auto;
 }
 
 .backlog__input {
-  width: 100%;
+min-width: 245px;
+ width: 100%;
   height: 42px;
   padding-left: 10px;
+  padding-right: 45px;
   border: 2px solid #7ba7ab;
   border-radius: 5px;
   outline: none;
   background: #f9f0da;
   color: #9e9c9c;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+ 
 }
 
 .backlog__button {
@@ -37,24 +40,32 @@
   background-size: 19px;
   background-repeat: no-repeat;
   background-position: center;
-  
 }
 .backlog__item {
   display: flex;
   flex-direction: column;
   max-width: 300px;
   border: 1px solid $borderColor;
-  gap: 10px;
   padding-left: 5px;
   padding-right: 5px;
   list-style: none;
+  cursor: move;
+
 }
 
 .backlog__container {
   display: flex;
+  width: 30%;
   flex-direction: column;
   background-color: $colorScrolDip;
   padding: 15px;
   height: 800px;
   overflow-y: auto;
+}
+
+.backlog__items {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
 }

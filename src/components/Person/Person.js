@@ -52,14 +52,14 @@ class Person {
 
   getTasks(userId, currendDate) {
     let htmlContentTask = ``;
-    this.tasks.forEach(({ executor, planStartDate, planEndDate }) => {
+    this.tasks.forEach(({ executor, subject, planStartDate, planEndDate }) => {
       // console.log(currendDate.toISOString().slice(0,10));
       // console.log(planStartDate);
       let curr = currendDate.toISOString().slice(0, 10);
       if (userId === executor && curr >= planStartDate && curr <= planEndDate) {
         htmlContentTask += `
     <div class="task__template">
-        <article class="backlog__box" id="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" data-info="" data-start-date="" data-task-week="">
+        <article class="backlog__box" id="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" data-name=${subject} data-start-date="" data-task-week="">
           <h4 class="backlog__box-name"></h4>
           <p class="backlog__box-text">${`Зaдача ${executor}`}</p>
         </article>
@@ -114,10 +114,10 @@ class Person {
     //           `;
     // });
 
-    const id = this.persons.map(({ id }) => id);
-    const executors = this.tasks.map(({ executor }) => {
-      return executor;
-    });
+    // const id = this.persons.map(({ id }) => id);
+    // const executors = this.tasks.map(({ executor }) => {
+    //   return executor;
+    // });
 
     this.persons.forEach(({ id, firstName }) => {
       htmlContent += `

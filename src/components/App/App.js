@@ -127,6 +127,7 @@ class App {
 
           return;
         }
+
       },
       false
     );

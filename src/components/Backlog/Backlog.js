@@ -27,20 +27,23 @@ class Backlog {
         endDate,
       }) => {
         if (!executor) {
-
-        htmlContent += `
+          htmlContent += `
           <li class="backlog__item"
           id="draggable"
           draggable="true"
-           ondragstart="event.dataTransfer.setData('text/plain',null)" data-name=${subject} 
-           data-start-date="" data-task-week="">
+           ondragstart="event.dataTransfer.setData('text/plain',null)"
+            data-name=${subject} 
+           data-start-date=${planStartDate}
+           data-end-date=${planEndDate}
+           data-item=${id}
+           data-task-week="">
               <span class="backlog__name">${subject}</span>
               <p class="backlog__text">${description}</p>
           </li>
           `;
         } else {
         }
-      } 
+      }
     );
 
     const htmlWrapper = `
@@ -54,7 +57,7 @@ class Backlog {
            id="backlog__button"
            ></button>
         </form>
-        <ul class="backlog__items">
+        <ul class="backlog__items" data-zone='1'>
             ${htmlContent}
         </ul>
     </div>
@@ -86,31 +89,6 @@ class Backlog {
     SerchBtn.addEventListener("mousedown", (e) => {
       e.preventDefault();
       this.eventListenerSearch();
-    });
-  }
-
-  dragendTasks() {
-    document.querySelectorAll(".backlog__items").forEach((ev) => {
-      ev.addEventListener("dragend", (e) => {
-        e.target.classList.remove("selected");
-        console.log("stop");
-      });
-    });
-  }
-
-  dragoverTasks() {
-    document.querySelectorAll(".backlog__items").forEach((e) => {
-      e.addEventListener("dragover", (e) => {
-        e.preventDefault();
-      });
-    });
-  }
-
-  dropBacklogTask() {
-    document.querySelectorAll(".backlog__items").forEach((e) => {
-      e.addEventListener("drop", (e) => {
-        e.target.append(document.querySelectorAll(".backlog__items"));
-      });
     });
   }
 }

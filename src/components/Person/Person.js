@@ -52,14 +52,19 @@ class Person {
 
   getTasks(userId, currendDate) {
     let htmlContentTask = ``;
-    this.tasks.forEach(({ executor, subject, planStartDate, planEndDate }) => {
+    this.tasks.forEach(({id, executor, subject, planStartDate, planEndDate }) => {
       // console.log(currendDate.toISOString().slice(0,10));
       // console.log(planStartDate);
       let curr = currendDate.toISOString().slice(0, 10);
       if (userId === executor && curr >= planStartDate && curr <= planEndDate) {
         htmlContentTask += `
     <div class="task__template">
-        <article class="backlog__box" id="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)" data-name=${subject} data-start-date="" data-task-week="">
+        <article class="backlog__box" id="draggable" draggable="true"  data-name=${subject}
+         data-start-date=${planStartDate}
+         data-end-date=${planEndDate}
+         data-task-week=""
+         data-item=${id}
+         >
           <h4 class="backlog__box-name"></h4>
           <p class="backlog__box-text">${`Зaдача ${executor}`}</p>
         </article>
@@ -180,60 +185,6 @@ class Person {
 
     ROOT_PERSON.innerHTML = htmlWrapper;
   }
-
-  dragoverPersonTask() {
-    document.querySelectorAll(".person__task").forEach((element) => {
-      element.addEventListener("dragover", (e) => {
-        e.preventDefault();
-      });
-    });
-  }
-
-  dropPersonTask() {
-    document.querySelectorAll(".person__task").forEach((element) => {
-      element.addEventListener("drop", (e) => {
-        e.preventDefault();
-
-        e.target.classList.remove("hovered");
-      });
-    });
-  }
-
-  dragstartTasks() {
-    document.querySelectorAll(".person__task").forEach((e) => {
-      e.addEventListener("dragstart", (e) => {
-        e.dataTransfer.setData("id", e.target.id);
-
-        e.target.classList.add("selected");
-      });
-    });
-  }
-
-  dragenterTasks() {
-    document.querySelectorAll(".person__task").forEach((e) => {
-      e.addEventListener("dragenter", (e) => {
-        e.target.classList.add("hovered");
-      });
-    });
-  }
-
-  dragleaveTasks() {
-    document.querySelectorAll(".person__task").forEach((e) => {
-      e.addEventListener("dragleave", (e) => {
-        e.target.classList.remove("hovered");
-      });
-    });
-  }
-
-  // dragendTasksPerson() {
-  //   document.querySelectorAll(".person__task").forEach((ev) => {
-  //     ev.addEventListener("dragend", (e) => {
-  //       e.target.classList.remove("selected");
-  //       e.target.classList.add("color");
-  //       console.log("stop");
-  //     });
-  //   });
-  // }
 
   eventListenerButtonPrev() {
     document

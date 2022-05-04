@@ -22,6 +22,7 @@
 .person__item {
   display: flex;
   border: 1px solid white;
+  gap: 9px;
 }
 
 .person__name {
@@ -47,6 +48,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2px;
   // overflow: hidden;
 }
 
@@ -82,6 +84,19 @@
   }
 }
 .backlog__box {
+  display: flex;
+  gap: 2px;
+  justify-content: start;
+  align-items: center;
+  background-color: #35c06f;
+  font-size: 12px;
+  // width: 100px;
+  padding: 2px;
+  color: black;
+  border: 1px solid black;
+  margin-bottom: 2px;
+  
+
   position: relative;
 }
 

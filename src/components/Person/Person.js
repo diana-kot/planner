@@ -45,6 +45,11 @@ class Person {
     this.persons = persons;
   }
 
+  setTask(task) {
+    task.Person = "";
+    this.tasks.push(task);
+  }
+
   getTasks(userId, currendDate) {
     let htmlContentTask = ``;
     this.tasks.forEach(({ executor, planStartDate, planEndDate }) => {
@@ -120,19 +125,40 @@ class Person {
           <div class="person__name">
           ${firstName}
           </div>
-          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[0])}</div>
-          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[1])}</div>
-          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[2])}</div>
-          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[3])}</div>
-          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[4])}</div>
-          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[5])}</div>
-          <div class="person__task" draggable="true">${this.getTasks(id, this.arrDate[6])}</div>
+          <div class="person__task" draggable="true">${this.getTasks(
+            id,
+            this.arrDate[0]
+          )}</div>
+          <div class="person__task" draggable="true">${this.getTasks(
+            id,
+            this.arrDate[1]
+          )}</div>
+          <div class="person__task" draggable="true">${this.getTasks(
+            id,
+            this.arrDate[2]
+          )}</div>
+          <div class="person__task" draggable="true">${this.getTasks(
+            id,
+            this.arrDate[3]
+          )}</div>
+          <div class="person__task" draggable="true">${this.getTasks(
+            id,
+            this.arrDate[4]
+          )}</div>
+          <div class="person__task" draggable="true">${this.getTasks(
+            id,
+            this.arrDate[5]
+          )}</div>
+          <div class="person__task" draggable="true">${this.getTasks(
+            id,
+            this.arrDate[6]
+          )}</div>
       </div>
       `;
     });
 
     const htmlWrapper = `
-    <div class="person__container">
+    <div class="person__container container">
       <div class="person__date">
         <button 
           class="calendar__button" id="previous-button" type="button">
@@ -167,14 +193,8 @@ class Person {
     document.querySelectorAll(".person__task").forEach((element) => {
       element.addEventListener("drop", (e) => {
         e.preventDefault();
-        // const currentTask =
 
-
-        let idItem = e.dataTransfer.getData("id");
-        console.log(idItem);
         e.target.classList.remove("hovered");
-       
-        e.target.append(document.querySelectorAll(".person__task"))
       });
     });
   }
@@ -182,8 +202,8 @@ class Person {
   dragstartTasks() {
     document.querySelectorAll(".person__task").forEach((e) => {
       e.addEventListener("dragstart", (e) => {
-        e.dataTransfer.setData('id', e.target.id)
-        
+        e.dataTransfer.setData("id", e.target.id);
+
         e.target.classList.add("selected");
       });
     });
@@ -192,7 +212,6 @@ class Person {
   dragenterTasks() {
     document.querySelectorAll(".person__task").forEach((e) => {
       e.addEventListener("dragenter", (e) => {
-       
         e.target.classList.add("hovered");
       });
     });
@@ -201,12 +220,20 @@ class Person {
   dragleaveTasks() {
     document.querySelectorAll(".person__task").forEach((e) => {
       e.addEventListener("dragleave", (e) => {
-       
         e.target.classList.remove("hovered");
       });
     });
   }
 
+  // dragendTasksPerson() {
+  //   document.querySelectorAll(".person__task").forEach((ev) => {
+  //     ev.addEventListener("dragend", (e) => {
+  //       e.target.classList.remove("selected");
+  //       e.target.classList.add("color");
+  //       console.log("stop");
+  //     });
+  //   });
+  // }
 
   eventListenerButtonPrev() {
     document

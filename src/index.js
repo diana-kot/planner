@@ -5,32 +5,33 @@ import Backlog from "./components/Backlog";
 
 (async () => {
   await App.render();
-  Person.dragoverPersonTask();
-  Person.dropPersonTask();
-   Person.dragenterTasks();
-  Person.dragleaveTasks();
 
-  
-
-  
-
-  Person.dragstartTasks();
-  Person.eventListenerButton();
+  //Person.eventListenerButton();
   Person.eventListenerButtonPrev();
   Person.eventListenerButtonNext();
 
+  Person.dragoverPersonTask();
+  Person.dropPersonTask();
+  Person.dragenterTasks();
+  Person.dragleaveTasks();
+
+  //Person.dragendTasksPerson()
+
+  // Person.dragstartTasks();
+
+  //Backlog.dragoverTasks();
   Backlog.eventListenerSearch();
-  Backlog.dragstartBaclogTasks();
-  Backlog.dragendTasks();
+  //Backlog.dragstartBaclogTasks();
+  // Backlog.dragendTasks();
   Backlog.dropBacklogTask();
 
-  // Backlog.drop()
-  // Backlog.dragleave()
-  // Backlog.dragenter()
-  // Backlog.dragover()
-  // Backlog.dragend()
-  // Backlog.dragstart()
-  // Backlog.drag()
+  Backlog.serchButton();
 
-
+  App.drop();
+  App.dragleave();
+  App.dragenter();
+  App.dragover();
+  App.dragend();
+  App.dragstart();
+  App.drag();
 })();

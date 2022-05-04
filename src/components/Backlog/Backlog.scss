@@ -12,8 +12,8 @@
 }
 
 .backlog__input {
-min-width: 245px;
- width: 100%;
+  max-width: 245px;
+  width: 100%;
   height: 42px;
   padding-left: 10px;
   padding-right: 45px;
@@ -23,7 +23,6 @@ min-width: 245px;
   background: #f9f0da;
   color: #9e9c9c;
   margin-bottom: 20px;
- 
 }
 
 .backlog__button {
@@ -41,6 +40,7 @@ min-width: 245px;
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .backlog__item {
   display: flex;
   flex-direction: column;
@@ -50,7 +50,6 @@ min-width: 245px;
   padding-right: 5px;
   list-style: none;
   cursor: move;
-
 }
 
 .backlog__container {
@@ -67,5 +66,39 @@ min-width: 245px;
   display: flex;
   flex-direction: column;
   gap: 7px;
+}
 
+@media (max-width: 966px) {
+  .backlog {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .backlog__container {
+    display: none;
+  }
+
+  .backlog {
+    display: none;
+  }
+
+  .backlog__item {
+    font-size: 11px;
+  }
+
+  .backlog__box-text {
+    font-size: 11px;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 425px) {
+  .backlog__item {
+    font-size: 10px;
+  }
+
+  .backlog__box-text {
+    font-size: 10px;
+  }
 }

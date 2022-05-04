@@ -22,7 +22,6 @@ body {
   padding-left: calc(40% - #{1180px / 2});
   padding-right: calc(40% - #{1180px / 2});
   padding-top: 50px;
-
 }
 
 .comics__container {
@@ -46,7 +45,19 @@ body {
 
 .backlog {
   display: flex;
-  min-width: 75%;
+  min-width: 79%;
 }
 
+@media (max-width: 1023px) {
+  .container {
+    padding-left: calc(40% - #{$widthSiteSml / 2});
+    padding-right: calc(30% - #{$widthSiteSml / 2});
+  }
+}
 
+@media (max-width: 767px) {
+  .container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}

@@ -6,8 +6,9 @@ import { API_URL, URL_PERSON, URL_TASK } from "../../constants/api";
 import { getDataApi } from "../../utils/getDataApi";
 
 class App {
-  constructor(dragged) {
+  constructor(dragged, droppedItem) {
     this.dragged = dragged;
+    this.droppedItem = droppedItem;
   }
 
   dragItems() {
@@ -17,6 +18,17 @@ class App {
       el.addEventListener("dragstart", this.dragstart);
       el.addEventListener("dragend", this.dragend);
       el.addEventListener("drag", this.dragend);
+
+      el.addEventListener("dragenter", (evt) => {
+        if (this.droppedItem !== evt.target) {
+          this.droppedItem = evt.target;
+          console.log(this.droppedItem)
+        }
+      });
+
+      el.addEventListener("dragleave", () => {
+        this.droppedItem = null;
+      });
     });
   }
 
@@ -98,7 +110,7 @@ class App {
       "dragover",
       (evt) => {
         evt.preventDefault();
-        evt.target.style.opacity = "";
+        // evt.target.style.opacity = "";
       },
       false
     );
@@ -108,16 +120,41 @@ class App {
     document.addEventListener(
       "drop",
       (evt) => {
+        // evt.preventDefault();
+
+        const dragTitle = evt.target.querySelector(".backlog__name");
+        const dragText = evt.target.querySelector(".backlog__text");
+
         const dragFlag = evt.dataTransfer.getData("dragItem");
         const dragItem = document.querySelector(`[data-item="${dragFlag}"]`);
-  
 
-        if (evt.target.className === "person__name") {
-          evt.target.removeChild(dragItem);
-        } else {
+        // if (evt.target.className === "person__task") {
+        //   let currentWeek = dragTitle;
+        //   evt.target.parentNode.removeChild(this.dragged);
+        //   evt.target.classList.add("backlog__box_selected");
+        //   evt.target.classList.remove("selected");
+        //   evt.target.classList.add("block");
+        //   evt.target.classList.add("hide");
+        //   // dragTaskText.classList.add("hide");
+        //   dragItem.setAttribute("data-start-date", currentWeek);
+
+        //   evt.target.append(dragItem);
+
+        //   return;
+        // }
+
+        if (this.droppedItem || this.droppedItem === evt.target) {
+          
+            console.log("Общий предок");
+        
+          console.log(this.droppedItem)
+        }
+        if (evt.target.className !== "person__name" && evt.target.className !== "backlog__box-text" ) {
           evt.target.append(dragItem);
+          console.log(this.droppedItem)
         }
 
+        // evt.target.append(dragItem);
       },
       false
     );

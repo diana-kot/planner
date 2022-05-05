@@ -35,7 +35,7 @@ class Backlog {
             data-name=${subject} 
            data-start-date=${planStartDate}
            data-end-date=${planEndDate}
-           data-item=${id}
+           data-item=${subject}
            data-task-week="">
               <span class="backlog__name">${subject}</span>
               <p class="backlog__text">${description}</p>
@@ -58,7 +58,9 @@ class Backlog {
            ></button>
         </form>
         <ul class="backlog__items" data-zone='1'>
+       
             ${htmlContent}
+           
         </ul>
     </div>
         `;

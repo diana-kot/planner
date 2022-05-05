@@ -63,7 +63,7 @@ class Person {
          data-start-date=${planStartDate}
          data-end-date=${planEndDate}
          data-task-week=""
-         data-item=${id}
+         data-item=${subject}
          >
           <h4 class="backlog__box-name"></h4>
           <p class="backlog__box-text">${`Зaдача ${executor}`}</p>
@@ -126,35 +126,35 @@ class Person {
 
     this.persons.forEach(({ id, firstName }) => {
       htmlContent += `
-      <div class="person__item">
-          <div class="person__name">
+      <div  class="person__item">
+          <div data-name=${id}  class="person__name">
           ${firstName}
           </div>
-          <div class="person__task" draggable="true">${this.getTasks(
+          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
             id,
             this.arrDate[0]
           )}</div>
-          <div class="person__task" draggable="true">${this.getTasks(
+          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
             id,
             this.arrDate[1]
           )}</div>
-          <div class="person__task" draggable="true">${this.getTasks(
+          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
             id,
             this.arrDate[2]
           )}</div>
-          <div class="person__task" draggable="true">${this.getTasks(
+          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
             id,
             this.arrDate[3]
           )}</div>
-          <div class="person__task" draggable="true">${this.getTasks(
+          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
             id,
             this.arrDate[4]
           )}</div>
-          <div class="person__task" draggable="true">${this.getTasks(
+          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
             id,
             this.arrDate[5]
           )}</div>
-          <div class="person__task" draggable="true">${this.getTasks(
+          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
             id,
             this.arrDate[6]
           )}</div>
@@ -195,7 +195,7 @@ class Person {
         startDate.setDate(this.arrDate[0].getDate() - 7);
         // this.getCurrentWeek(startDate);
         // this.renderDates();
-        console.log(startDate.toISOString().slice(0, 10));
+        // console.log(startDate.toISOString().slice(0, 10));
         this.render(startDate);
         this.setTasks(this.tasks);
       });

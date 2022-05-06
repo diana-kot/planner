@@ -6,6 +6,7 @@ class Person {
   constructor() {
     this.persons = [];
     this.tasks = [];
+    this.htmlContentTasks = [];
     this.arrDate = [];
     // // this.id = user.id;
     // // this.firstName = user.firstName;
@@ -52,28 +53,37 @@ class Person {
 
   getTasks(userId, currendDate) {
     let htmlContentTask = ``;
-    this.tasks.forEach(({id, executor, subject, planStartDate, planEndDate }) => {
-      // console.log(currendDate.toISOString().slice(0,10));
-      // console.log(planStartDate);
-      let curr = currendDate.toISOString().slice(0, 10);
-      if (userId === executor && curr >= planStartDate && curr <= planEndDate) {
-        htmlContentTask += `
+    this.tasks.forEach(
+      ({ id, executor, subject, planStartDate, planEndDate }, index) => {
+        // console.log(currendDate.toISOString().slice(0,10));
+        // console.log(planStartDate);
+        let curr = currendDate.toISOString().slice(0, 10);
+        if (
+          userId === executor &&
+          curr >= planStartDate &&
+          curr <= planEndDate
+        ) {
+          //this.addTaskContent(element);
+          htmlContentTask += `
     <div class="task__template">
-        <article class="backlog__box" id="draggable" draggable="true"  data-name=${subject}
-         data-start-date=${planStartDate}
-         data-end-date=${planEndDate}
-         data-task-week=""
-         data-item=${subject}
-         >
+        <article class="backlog__box" id="draggable" draggable="true" 
+          data-name=${subject}
+          data-start-date=${planStartDate}
+          data-end-date=${planEndDate}
+          data-task-week=""
+          data-executor =${executor}
+          data-item=${subject}
+          >
           <h4 class="backlog__box-name"></h4>
-          <p class="backlog__box-text">${`Зaдача ${executor}`}</p>
+          <p class="backlog__name">${`Зaдача ${index + 1}`}</p>
         </article>
     </div>
     `;
-      } else {
-        htmlContentTask += ``;
+        } else {
+          htmlContentTask += ``;
+        }
       }
-    });
+    );
     return htmlContentTask;
   }
 
@@ -124,13 +134,16 @@ class Person {
     //   return executor;
     // });
 
-    this.persons.forEach(({ id, firstName }) => {
+    this.persons.forEach(({ id, firstName }, index) => {
       htmlContent += `
       <div  class="person__item">
-          <div data-name=${id}  class="person__name">
+          <div 
+           ${index}
+            data-name=${id}
+           class="person__name">
           ${firstName}
           </div>
-          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
+          <div data-zone='2' ${index}  class="person__task" draggable="true">${this.getTasks(
             id,
             this.arrDate[0]
           )}</div>
@@ -186,6 +199,10 @@ class Person {
     ROOT_PERSON.innerHTML = htmlWrapper;
   }
 
+
+  
+
+
   eventListenerButtonPrev() {
     document
       .getElementById("previous-button")
@@ -208,7 +225,7 @@ class Person {
       startDate.setDate(this.arrDate[0].getDate() + 7);
       // this.getCurrentWeek(startDate);
       // this.renderDates();
-      console.log(startDate.toISOString().slice(0, 10));
+      // console.log(startDate.toISOString().slice(0, 10));
 
       this.render(startDate);
       this.setTasks(this.tasks);

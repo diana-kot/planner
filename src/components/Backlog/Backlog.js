@@ -1,7 +1,6 @@
 import { ROOT_BACKLOG } from "../../constants/root";
 
 import "./Backlog.scss";
-
 class Backlog {
   constructor(dragged) {
     this.tasks = [];
@@ -31,12 +30,11 @@ class Backlog {
           <li class="backlog__item"
           id="draggable"
           draggable="true"
-           ondragstart="event.dataTransfer.setData('text/plain',null)"
             data-name=${subject} 
-           data-start-date=${planStartDate}
-           data-end-date=${planEndDate}
-           data-item=${subject}
-           data-task-week="">
+            data-start-date=${planStartDate}
+            data-end-date=${planEndDate}
+            data-item=${subject}
+            data-task-week="">
               <span class="backlog__name">${subject}</span>
               <p class="backlog__text">${description}</p>
           </li>
@@ -49,18 +47,16 @@ class Backlog {
     const htmlWrapper = `
     <div class="backlog__container">
         <h1 class="backlog__title">Backlog</h1>
-        <form class="backlog__form">
-          <input class="backlog__input" type="search" placeholder="Поиск..." id="backlogInput">
-          <button
-           class="backlog__button" 
-           type="button"
-           id="backlog__button"
-           ></button>
-        </form>
+          <form class="backlog__form">
+            <input class="backlog__input" type="search" placeholder="Поиск..." id="backlogInput">
+            <button
+            class="backlog__button" 
+            type="button"
+            id="backlog__button"
+            ></button>
+          </form>
         <ul class="backlog__items" data-zone='1'>
-       
             ${htmlContent}
-           
         </ul>
     </div>
         `;

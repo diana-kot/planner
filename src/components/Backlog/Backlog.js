@@ -34,9 +34,9 @@ class Backlog {
             data-start-date=${planStartDate}
             data-end-date=${planEndDate}
             data-item=${subject}
-            data-task-week="">
+            data-week="">
               <span class="backlog__name">${subject}</span>
-              <p class="backlog__text">${description}</p>
+              
           </li>
           `;
         } else {
@@ -62,6 +62,8 @@ class Backlog {
         `;
 
     ROOT_BACKLOG.innerHTML = htmlWrapper;
+     
+  this.eventListenerSearch();
   }
 
   eventListenerSearch() {

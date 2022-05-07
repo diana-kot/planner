@@ -1,6 +1,6 @@
 import { ROOT_PERSON } from "../../constants/root";
 import { dateFilter } from "../../utils/dateFilter";
-
+import App from "../App";
 import "./Person.scss";
 class Person {
   constructor() {
@@ -17,26 +17,26 @@ class Person {
     if (startDate != null) {
       d = new Date(startDate);
     }
-    // const d = new Date(startDate);
+    d.setDate(d.getDate() - d.getDay()); // first day on week
     for (let p = 0; p < 7; p++) {
-      d.setDate(d.getDate() + 1);
-      this.arrDate[p] = new Date(+d);
+      d.setDate(d.getDate()+1);
+      this.arrDate[p] = new Date(d);
     }
   }
-  // getNextWeek() {
-  //   const d = this.arrDate[0];
-  //   for (let p = 0; p < 7; p++) {
-  //     d.setDate(d.getDate() + 7);
-  //     this.arrDate[p] = new Date(+d);
-  //   }
-  // }
-  // getLastWeek() {
-  //   const d = this.arrDate[0];
-  //   for (let p = 0; p < 7; p++) {
-  //     d.setDate(d.getDate() - 7);
-  //     this.arrDate[p] = new Date(+d);
-  //   }
-  // }
+
+  getNextWeek() {
+    let startDate = this.arrDate[0];
+    startDate.setDate(this.arrDate[0].getDate() + 7);
+    console.log(this.arrDate[0].getDate());
+    console.log(startDate.toISOString().slice(0, 10));
+    this.getCurrentWeek(startDate);
+  }
+  getLastWeek() {
+    let startDate = this.arrDate[0];
+    startDate.setDate(this.arrDate[0].getDate() - 7);
+    console.log(startDate.toISOString().slice(0, 10));
+    this.getCurrentWeek(startDate);
+  }
 
   setTasks(tasks) {
     this.tasks = tasks;
@@ -47,22 +47,22 @@ class Person {
   }
 
   setTask(task) {
-    task.Person = "";
+    // task.Person = "";
     this.tasks.push(task);
+    // console.log(this.tasks)
   }
 
   getTasks(userId, currendDate) {
     let htmlContentTask = ``;
     this.tasks.forEach(
-      ({ id, executor, subject, planStartDate, planEndDate }, index) => {
-        // console.log(currendDate.toISOString().slice(0,10));
-        // console.log(planStartDate);
+      ({ executor, subject, planStartDate, planEndDate }, index) => {
         let curr = currendDate.toISOString().slice(0, 10);
         if (
-          userId === executor &&
+          userId == executor &&
           curr >= planStartDate &&
           curr <= planEndDate
         ) {
+          // console.log(subject);
           //this.addTaskContent(element);
           htmlContentTask += `
     <div class="task__template">
@@ -73,8 +73,9 @@ class Person {
           data-task-week=""
           data-executor =${executor}
           data-item=${subject}
+          data-person-id=${userId}
           >
-          <h4 class="backlog__box-name"></h4>
+          <h4 class="backlog__box-name">${subject}</h4>
           <p class="backlog__name">${`Зaдача ${index + 1}`}</p>
         </article>
     </div>
@@ -86,91 +87,48 @@ class Person {
     );
     return htmlContentTask;
   }
-
   renderDates() {
+
     let htmlContentDate = "";
     this.arrDate.forEach((el) => {
       htmlContentDate += `  
                 <li class="table__date">
-                  ${dateFilter.dateFormat(el)}
+                  ${dateFilter.dateFormat(el)} 
                 </li>
               `;
     });
     return htmlContentDate;
   }
 
+  renderTasks(id) {
+    let htmlContentTasks = ``;
+    this.arrDate.forEach((date) => {
+      htmlContentTasks += `<div data-zone='2' 
+        class="person__task"
+        draggable="true"
+        data-person-id=${id}
+        data-person-date=${date.toISOString().slice(0, 10)}
+        >
+        ${this.getTasks(id, date)}
+        </div>`;
+    });
+    return htmlContentTasks;
+  }
+
   render(startDate) {
     let htmlContent = "";
     let htmlContentDate = "";
+   // this.getCurrentWeek(startDate);
 
-    // const startDate = new Date();
-    // const endDate = new Date("2023-01-01");
-
-    // const now = new Date();
-    // const start = new Date(now.getFullYear(), 0, 1);
-    // const diff = now - start;
-    // const oneDay = 1000 * 60 * 60 * 24;
-    // let day = Math.floor(diff / oneDay);
-    // let currentWeek = Math.floor(day / 7);
-
-    this.getCurrentWeek(startDate);
-
-    // const d = new Date();
-    // for (let p = 0; p < 7; p++) {
-    //   d.setDate(d.getDate() + 1);
-    //   this.arrDate[p] = dateFilter.dateFormat(new Date(+d));
-    // }
     htmlContentDate = this.renderDates();
-    // this.arrDate.forEach((el) => {
-    //   htmlContentDate += `
-    //             <li class="table__date">
-    //               ${dateFilter.dateFormat(el)}
-    //             </li>
-    //           `;
-    // });
-
-    // const id = this.persons.map(({ id }) => id);
-    // const executors = this.tasks.map(({ executor }) => {
-    //   return executor;
-    // });
-
+    console.log(this.tasks);
     this.persons.forEach(({ id, firstName }, index) => {
       htmlContent += `
       <div  class="person__item">
-          <div 
-           ${index}
-            data-name=${id}
-           class="person__name">
-          ${firstName}
-          </div>
-          <div data-zone='2' ${index}  class="person__task" draggable="true">${this.getTasks(
-            id,
-            this.arrDate[0]
-          )}</div>
-          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
-            id,
-            this.arrDate[1]
-          )}</div>
-          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
-            id,
-            this.arrDate[2]
-          )}</div>
-          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
-            id,
-            this.arrDate[3]
-          )}</div>
-          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
-            id,
-            this.arrDate[4]
-          )}</div>
-          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
-            id,
-            this.arrDate[5]
-          )}</div>
-          <div data-zone='2' class="person__task" draggable="true">${this.getTasks(
-            id,
-            this.arrDate[6]
-          )}</div>
+          <div div data-zone='2' 
+          class="person__name"
+          data-person-id=${id}>  ${firstName} </div>
+          ${this.renderTasks(id)}
       </div>
       `;
     });
@@ -197,38 +155,30 @@ class Person {
     `;
 
     ROOT_PERSON.innerHTML = htmlWrapper;
+    this.eventListenerButtonPrev();
+    this.eventListenerButtonNext();
+    //   App.dragZoneTask();
   }
-
-
-  
-
 
   eventListenerButtonPrev() {
     document
       .getElementById("previous-button")
       .addEventListener("click", (e) => {
         e.preventDefault();
-        let startDate = new Date();
-        startDate.setDate(this.arrDate[0].getDate() - 7);
-        // this.getCurrentWeek(startDate);
-        // this.renderDates();
-        // console.log(startDate.toISOString().slice(0, 10));
-        this.render(startDate);
-        this.setTasks(this.tasks);
+        console.log("клик по левой кнопке");
+        this.getLastWeek();
+        this.render();
+        //this.setTasks(this.tasks);
       });
   }
 
   eventListenerButtonNext() {
     document.getElementById("next-button").addEventListener("click", (e) => {
       e.preventDefault();
-      let startDate = new Date();
-      startDate.setDate(this.arrDate[0].getDate() + 7);
-      // this.getCurrentWeek(startDate);
-      // this.renderDates();
-      // console.log(startDate.toISOString().slice(0, 10));
-
-      this.render(startDate);
-      this.setTasks(this.tasks);
+      console.log("клик по правой кнопке");
+      this.getNextWeek();
+      this.render();
+      //this.setTasks(this.tasks);
     });
   }
 }

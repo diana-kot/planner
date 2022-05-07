@@ -1,6 +1,7 @@
 import Person from "../Person";
 import Backlog from "../Backlog";
 
+
 import "./App.scss";
 import { API_URL, URL_PERSON, URL_TASK } from "../../constants/api";
 import { getDataApi } from "../../utils/getDataApi";
@@ -17,9 +18,6 @@ class App {
       el.addEventListener("dragstart", this.dragstart);
       el.addEventListener("dragend", this.dragend);
       el.addEventListener("drag", this.dragend);
-
-      // el.addEventListener("dragenter", this.dragenter);
-      // el.addEventListener("dragleave", this.dragleave);
     });
   }
 
@@ -37,6 +35,17 @@ class App {
     const dropZoneTask = document.querySelectorAll(".person__task");
 
     dropZoneTask.forEach((el) => {
+      el.addEventListener("dragenter", this.dragenter);
+      el.addEventListener("dragleave", this.dragleave);
+      el.addEventListener("dragover", this.dragover);
+      el.addEventListener("drop", this.drop);
+    });
+  }
+
+  dragZoneName() {
+    const dropZoneName = document.querySelectorAll(".person__name");
+
+    dropZoneName.forEach((el) => {
       el.addEventListener("dragenter", this.dragenter);
       el.addEventListener("dragleave", this.dragleave);
       el.addEventListener("dragover", this.dragover);
@@ -62,7 +71,7 @@ class App {
       "dragend",
       (evt) => {
         evt.preventDefault();
-        evt.target.classList.remove("selected");
+        
       },
       false
     );
@@ -77,8 +86,7 @@ class App {
       "dragenter",
       (evt) => {
         evt.preventDefault();
-
-        if (evt.target.className === "person__task") {
+        if (evt.target.className === "person__task" || evt.target.className === "person__name") {
           evt.target.classList.add("hovered");
         }
       },
@@ -102,21 +110,21 @@ class App {
       "dragover",
       (evt) => {
         evt.preventDefault();
-       
       },
       false
     );
   }
 
-  convertToTask(dragItem)
-  {
-    return task={
-    "subject": dragItem.getAttribute("data-item"),
-    "executor": dragItem.getAttribute("data-executor"),
-    "planStartDate": dragItem.getAttribute("data-start-date"),
-    "planEndDate": dragItem.getAttribute("data-end-date"),
-    }
-  }
+  // convertToTask(context, dragItem){
+  //   let task={
+  //   "subject": dragItem.getAttribute("data-item"),
+  //   "executor": context.getAttribute("data-person-id"),
+  //   "planStartDate": context.getAttribute("data-person-date"),
+  //   "planEndDate": context.getAttribute("data-person-date")
+  //   }
+  //   console.log(task);
+  //   return task;
+  // }
 
   drop() {
     document.addEventListener(
@@ -126,64 +134,90 @@ class App {
         const dragFlag = evt.dataTransfer.getData("dragItem");
         const dragItem = document.querySelector(`[data-item="${dragFlag}"]`);
 
-        evt.dataTransfer.setData("name", this.dataset.name);
+        evt.dataTransfer.setData("name", evt.target.dataset.name);
 
         const dragTitle = dragItem.querySelector(".backlog__name");
-        const dragText = dragItem.querySelector(".backlog__text");
+        // const dragText = dragItem.querySelector(".backlog__text");
 
-        if (this.className === "person__task") {
+        if (evt.target.className === "person__name") {
+          console.log("Зашел сюда 3");
+        
+         const dataStart = dragItem.getAttribute("data-start-date");
+         const dataEnd = dragItem.getAttribute("data-end-date");
+         const dataExecutor = evt.target.getAttribute("data-person-id");
+        //  Person.setTask(convertToTask(dragItem));
+
+          dragItem.classList.add("backlog__box_selected");
+          dragTitle.classList.add("block");
+          // dragText.classList.add("hide");
+          dragItem.classList.remove("selected");
+     
+          let task={
+            "subject": dragItem.getAttribute("data-item"),
+            "executor": evt.target.getAttribute("data-person-id"),
+            "planStartDate": dragItem.getAttribute("data-start-date"),
+            "planEndDate": dragItem.getAttribute("data-end-date")
+            }
+          Person.setTask(task);
+          console.log(dataExecutor);
+
+          evt.target.append(dragItem);
+
+          Person.render();
+
+          return;
+
+        } else if (evt.target.className === "person__task") {
 
           console.log("Зашел сюда 1");
           
           const dataStart = dragItem.getAttribute("data-start-date");
           const dataEnd = dragItem.getAttribute("data-end-date");
-          const dataExecutor = dragItem.getAttribute("data-executor")
+          const dataExecutor = evt.target.getAttribute("data-person-id")
+          const currentDate = evt.target.getAttribute("data-person-date");
+          
+          let task={
+
+            "subject": dragItem.getAttribute("data-item"),
+            "executor": evt.target.getAttribute("data-person-id"),
+            "planStartDate": evt.target.getAttribute("data-person-date"),
+            "planEndDate": evt.target.getAttribute("data-person-date")
+            }
+          Person.setTask(task);
           // dragItem.parentNode.removeChild(dragItem);
           dragItem.classList.add("backlog__box_selected");
           dragTitle.classList.add("block");
-          dragText.classList.add("hide");
+          // dragText.classList.add("hide");
           dragItem.classList.remove("selected");
 
-          this.append(dragItem);
+
+          // console.log(dataExecutor);
+          console.log(task); 
+          // console.log(evt.target); 
+          evt.target.append(dragItem);
 
           return;
           // this.appendChild(dragItem);
-        } else if (this.className === "backlog__items") {
+        } else if (evt.target.className === "backlog__items") {
           console.log("Зашел сюда 2");
           
           dragItem.parentNode.removeChild(dragItem);
 
           dragItem.classList.remove("backlog__box_selected");
           dragTitle.classList.remove("block");
-          dragText.classList.remove("hide");
+          // dragText.classList.remove("hide");
           dragItem.classList.remove("selected");
         
           const dataStart = dragItem.getAttribute("data-start-date");
           const dataEnd = dragItem.getAttribute("data-end-date");
           const dataExecutor = dragItem.getAttribute("data-executor")
      
-
+          // console.log(this); 
+          // console.log(evt.target); 
           this.appendChild(dragItem);
           return;
 
-        } else if (this.className === "person__name") {
-          console.log("Зашел сюда 3");
-        
-         const dataStart = dragItem.getAttribute("data-start-date");
-         const dataEnd = dragItem.getAttribute("data-end-date");
-         const dataExecutor = dragItem.getAttribute("data-executor")
-        //  Person.setTask(convertToTask(dragItem));
-
-          dragItem.classList.add("backlog__box_selected");
-          dragTitle.classList.add("block");
-          dragText.classList.add("hide");
-          dragItem.classList.remove("selected");
-     
-
-          this.append(dragItem);
-
-          return;
-        } 
+        }
       },
       false
     );
@@ -210,7 +244,7 @@ class App {
 
     Backlog.setTasks(backlogTasks);
     Person.setTasks(presonTasks);
-
+    Person.getCurrentWeek();
     Person.render();
     Backlog.render();
   }

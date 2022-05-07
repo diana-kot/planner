@@ -7,16 +7,13 @@ import Backlog from "./components/Backlog";
   await App.render();
 
   //Person.eventListenerButton();
-  Person.eventListenerButtonPrev();
-  Person.eventListenerButtonNext();
+  // Person.eventListenerButtonPrev();
+  // Person.eventListenerButtonNext();
 
-
-
- 
-  Backlog.eventListenerSearch();
+  // Backlog.eventListenerSearch();
 
   App.dragItems();
   App.dragZoneBaclog();
   App.dragZoneTask();
-  
+  App.dragZoneName();
 })();

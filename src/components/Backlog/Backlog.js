@@ -16,18 +16,19 @@ class Backlog {
   async render() {
     let htmlContent = "";
 
-    this.tasks.forEach(({ id, subject, executor, planStartDate, planEndDate }) => {
-      if (!executor) {
+    this.tasks.forEach(task => {
+      if (!task.executor) {
+        // console.log(task)
         htmlContent += `
           <li class="backlog__item"
-          dataid=${id}
+          data-id=${task.id}
           draggable="true"
-            data-name=${subject} 
-            data-start-date=${planStartDate}
-            data-end-date=${planEndDate}
-            data-item=${subject}
+            data-name="${task.subject}" 
+            data-start-date=${task.planStartDate}
+            data-end-date=${task.planEndDate}
+            data-item="${task.subject}"
             data-week="">
-              <span class="backlog__name">${subject}</span>
+              <span class="backlog__name">${task.subject}</span>
           </li>
           `;
       } else {

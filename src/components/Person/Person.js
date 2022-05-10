@@ -84,16 +84,17 @@ class Person {
           htmlContentTask += `
     <div class="task__template">
         <article class="backlog__box" draggable="true" 
-          dataid=${id}
-          data-name=${subject}
+          data-id=${id}
+          data-name="${subject}"
           data-start-date=${planStartDate}
           data-end-date=${planEndDate}
           data-task-week=""
           data-executor =${executor}
-          data-item=${subject}
+          data-item="${subject}"
           data-person-id=${userId}
           >
           <p class="backlog__name">${`${subject} ${index + 1}`}</p>
+          
         </article>
     </div>
     `;

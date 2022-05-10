@@ -1,5 +1,4 @@
 @import "./vars.scss";
-
 @import "./null.scss";
 
 *,
@@ -18,13 +17,6 @@ body {
 }
 
 .backlog__box_selected {
-  overflow: hidden;
-  font-size: 14px;
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 }
 
 .backlog__box_selected:after {
@@ -64,7 +56,6 @@ body {
   justify-content: start;
   align-items: center;
   background-color: #35c06f;
-
   font-size: 12px;
   width: 100px;
   

@@ -1,6 +1,7 @@
 import { ROOT_PERSON } from "../../constants/root";
 import { dateFilter } from "../../utils/dateFilter";
 import App from "../App";
+
 import "./Person.scss";
 class Person {
   constructor() {
@@ -8,8 +9,6 @@ class Person {
     this.tasks = [];
     this.htmlContentTasks = [];
     this.arrDate = [];
-    // // this.id = user.id;
-    // // this.firstName = user.firstName;
   }
 
   getCurrentWeek(startDate) {
@@ -19,7 +18,7 @@ class Person {
     }
     d.setDate(d.getDate() - d.getDay()); // first day on week
     for (let p = 0; p < 7; p++) {
-      d.setDate(d.getDate()+1);
+      d.setDate(d.getDate() + 1);
       this.arrDate[p] = new Date(d);
     }
   }
@@ -47,15 +46,33 @@ class Person {
   }
 
   setTask(task) {
-    // task.Person = "";
-    this.tasks.push(task);
+    if (this.tasks.filter((el) => el.id === task.id).length == 0) {
+      this.tasks.push(task);
+    } else {
+      this.tasks.forEach((el) => {
+        if (task.id === el.id) {
+          el.executor = task.executor;
+          el.planStartDate = task.planStartDate;
+          el.planEndDate = task.planEndDate;
+        }
+      });
+    }
+
     // console.log(this.tasks)
+    // task.Person = "";
+
+    console.log(this.tasks);
+  }
+
+  deleteTask(id) {
+    this.tasks = this.tasks.filter((task) => task.id != id);
+    console.log(this.tasks);
   }
 
   getTasks(userId, currendDate) {
     let htmlContentTask = ``;
     this.tasks.forEach(
-      ({ executor, subject, planStartDate, planEndDate }, index) => {
+      ({ id, executor, subject, planStartDate, planEndDate }, index) => {
         let curr = currendDate.toISOString().slice(0, 10);
         if (
           userId == executor &&
@@ -66,7 +83,8 @@ class Person {
           //this.addTaskContent(element);
           htmlContentTask += `
     <div class="task__template">
-        <article class="backlog__box" id="draggable" draggable="true" 
+        <article class="backlog__box" draggable="true" 
+          dataid=${id}
           data-name=${subject}
           data-start-date=${planStartDate}
           data-end-date=${planEndDate}
@@ -75,21 +93,17 @@ class Person {
           data-item=${subject}
           data-person-id=${userId}
           >
-          <h4 class="backlog__box-name">${subject}</h4>
-          <p class="backlog__name">${`Зaдача ${index + 1}`}</p>
+          <p class="backlog__name">${`${subject} ${index + 1}`}</p>
         </article>
     </div>
     `;
-        } else {
-          htmlContentTask += ``;
         }
       }
     );
     return htmlContentTask;
   }
   renderDates() {
-
-    let htmlContentDate = "";
+    let htmlContentDate = ``;
     this.arrDate.forEach((el) => {
       htmlContentDate += `  
                 <li class="table__date">
@@ -115,17 +129,15 @@ class Person {
     return htmlContentTasks;
   }
 
-  render(startDate) {
+  render() {
     let htmlContent = "";
     let htmlContentDate = "";
-   // this.getCurrentWeek(startDate);
 
     htmlContentDate = this.renderDates();
-    console.log(this.tasks);
-    this.persons.forEach(({ id, firstName }, index) => {
+    this.persons.forEach(({ id, firstName }) => {
       htmlContent += `
       <div  class="person__item">
-          <div div data-zone='2' 
+          <div data-zone='2' 
           class="person__name"
           data-person-id=${id}>  ${firstName} </div>
           ${this.renderTasks(id)}
@@ -155,9 +167,9 @@ class Person {
     `;
 
     ROOT_PERSON.innerHTML = htmlWrapper;
+
     this.eventListenerButtonPrev();
     this.eventListenerButtonNext();
-    //   App.dragZoneTask();
   }
 
   eventListenerButtonPrev() {
@@ -167,8 +179,7 @@ class Person {
         e.preventDefault();
         console.log("клик по левой кнопке");
         this.getLastWeek();
-        this.render();
-        //this.setTasks(this.tasks);
+        this.render(true);
       });
   }
 
@@ -177,8 +188,7 @@ class Person {
       e.preventDefault();
       console.log("клик по правой кнопке");
       this.getNextWeek();
-      this.render();
-      //this.setTasks(this.tasks);
+      this.render(true);
     });
   }
 }

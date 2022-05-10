@@ -1,5 +1,7 @@
 import { ROOT_BACKLOG } from "../../constants/root";
 
+import App from "../App";
+
 import "./Backlog.scss";
 class Backlog {
   constructor(dragged) {
@@ -14,21 +16,11 @@ class Backlog {
   async render() {
     let htmlContent = "";
 
-    this.tasks.forEach(
-      ({
-        id,
-        subject,
-        description,
-        executor,
-        creationDate,
-        planStartDate,
-        planEndDate,
-        endDate,
-      }) => {
-        if (!executor) {
-          htmlContent += `
+    this.tasks.forEach(({ id, subject, executor, planStartDate, planEndDate }) => {
+      if (!executor) {
+        htmlContent += `
           <li class="backlog__item"
-          id="draggable"
+          dataid=${id}
           draggable="true"
             data-name=${subject} 
             data-start-date=${planStartDate}
@@ -36,13 +28,11 @@ class Backlog {
             data-item=${subject}
             data-week="">
               <span class="backlog__name">${subject}</span>
-              
           </li>
           `;
-        } else {
-        }
+      } else {
       }
-    );
+    });
 
     const htmlWrapper = `
     <div class="backlog__container">
@@ -60,14 +50,15 @@ class Backlog {
         </ul>
     </div>
         `;
-
+    //App.dragZoneBaclog();
     ROOT_BACKLOG.innerHTML = htmlWrapper;
-     
-  this.eventListenerSearch();
+
+    this.serchButton();
   }
 
   eventListenerSearch() {
     const serch = document.getElementById("backlogInput");
+    console.log("eventListenerSearch=>");
     let val = serch.value.toLowerCase();
 
     const taskList = document.querySelectorAll(".backlog__item");
@@ -86,7 +77,7 @@ class Backlog {
 
   serchButton() {
     const SerchBtn = document.getElementById("backlog__button");
-    SerchBtn.addEventListener("mousedown", (e) => {
+    SerchBtn.addEventListener("click", (e) => {
       e.preventDefault();
       this.eventListenerSearch();
     });

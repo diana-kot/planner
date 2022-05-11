@@ -40,23 +40,24 @@
 }
 
 .person__task {
-  width: 150px;
+  display: flex;
   min-height: 99px;
   border-bottom: solid 1px #d7dbdd;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2px;
+  align-items: stretch;
+  width: 100%;
+  gap: 8px;
 }
 
 .person__date {
   display: flex;
   flex: 1 1 auto;
   overflow: hidden;
-  padding-left: 10px;
-  margin-left: 100px;
-  padding-right: 10px;
+  // padding-left: 10px;
+  margin-left: 90px;
+  // padding-right: 10px;
 }
 
 .table__date {
@@ -132,7 +133,8 @@
 
   .backlog__box {
     font-size: 10px;
-    // width: 76px;
+    writing-mode: vertical-rl;
+    display: flex;
     padding: 1px;
   }
 }
@@ -157,7 +159,7 @@
   }
 
   .person__date {
-    margin-left: 25px;
+    margin-left: 3px;
     padding-right: 0px;
     padding-left: 0px;
   }

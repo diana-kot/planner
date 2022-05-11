@@ -1,6 +1,5 @@
 import { ROOT_PERSON } from "../../constants/root";
 import { dateFilter } from "../../utils/dateFilter";
-import App from "../App";
 
 import "./Person.scss";
 class Person {
@@ -16,7 +15,7 @@ class Person {
     if (startDate != null) {
       d = new Date(startDate);
     }
-    d.setDate(d.getDate() - d.getDay()); // first day on week
+    d.setDate(d.getDate() - d.getDay()); 
     for (let p = 0; p < 7; p++) {
       d.setDate(d.getDate() + 1);
       this.arrDate[p] = new Date(d);
@@ -57,15 +56,11 @@ class Person {
         }
       });
     }
-
-    // console.log(this.tasks)
-    // task.Person = "";
-
     console.log(this.tasks);
   }
 
   deleteTask(id) {
-    this.tasks = this.tasks.filter((task) => task.id != id);
+    this.tasks = this.tasks.filter((task) => task.id !== id);
     console.log(this.tasks);
   }
 
@@ -79,8 +74,6 @@ class Person {
           curr >= planStartDate &&
           curr <= planEndDate
         ) {
-          // console.log(subject);
-          //this.addTaskContent(element);
           htmlContentTask += `
     <div class="task__template">
         <article class="backlog__box" draggable="true" 
@@ -94,7 +87,6 @@ class Person {
           data-person-id=${userId}
           >
           <p class="backlog__name">${`${subject} ${index + 1}`}</p>
-          
         </article>
     </div>
     `;

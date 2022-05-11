@@ -1,7 +1,5 @@
 import { ROOT_BACKLOG } from "../../constants/root";
 
-import App from "../App";
-
 import "./Backlog.scss";
 class Backlog {
   constructor(dragged) {
@@ -18,7 +16,6 @@ class Backlog {
 
     this.tasks.forEach(task => {
       if (!task.executor) {
-        // console.log(task)
         htmlContent += `
           <li class="backlog__item"
           data-id=${task.id}
@@ -51,7 +48,6 @@ class Backlog {
         </ul>
     </div>
         `;
-    //App.dragZoneBaclog();
     ROOT_BACKLOG.innerHTML = htmlWrapper;
 
     this.serchButton();
@@ -59,7 +55,6 @@ class Backlog {
 
   eventListenerSearch() {
     const serch = document.getElementById("backlogInput");
-    console.log("eventListenerSearch=>");
     let val = serch.value.toLowerCase();
 
     const taskList = document.querySelectorAll(".backlog__item");

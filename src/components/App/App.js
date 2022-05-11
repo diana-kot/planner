@@ -83,7 +83,8 @@ class App {
     document.addEventListener("dragleave", (evt) => {
       evt.preventDefault();
       evt.target.classList.remove("hovered");
-      evt.target.style.border = "";    });
+      evt.target.style.border = "";
+    });
   }
 
   dragover() {
@@ -98,11 +99,8 @@ class App {
       const dragFlag = evt.dataTransfer.getData("dragItem");
       const dragItem = document.querySelector(`[data-item="${dragFlag}"]`);
       const dragTitle = dragItem.querySelector(".backlog__name");
-      console.log(dragItem.getAttribute("data-name"));
-  
+
       if (evt.target.className === "person__task") {
-        console.log("Зашел сюда 1");
-        console.log(dragItem);
         dragItem.classList.add("hide");
         let task = {
           id: dragItem.getAttribute("data-id"),
@@ -121,28 +119,25 @@ class App {
         evt.target.className === "backlog__name" ||
         evt.target.className === "backlog__container"
       ) {
-        console.log("Зашел сюда 2");
         evt.target.classList.remove("hovered");
         evt.target.style.border = "";
         dragItem.classList.remove("backlog__box");
         dragItem.classList.remove("hide");
-        console.log(dragItem);
+
         dragItem.classList.remove("backlog__box_selected");
         dragItem.classList.add("backlog__item");
         dragTitle.textContent = dragItem.getAttribute("data-name");
 
-        console.log(dragItem);
         dragItem.classList.remove("selected");
         if (evt.target.className === "backlog__name") {
           evt.target.parentNode.parentNode.append(dragItem);
         } else {
           evt.target.append(dragItem);
         }
-        console.log(dragItem.getAttribute("data-id"));
+
         Person.deleteTask(dragItem.getAttribute("data-id"));
         Person.render();
       } else if (evt.target.className === "person__name") {
-        console.log("Зашел сюда 3");
         dragItem.classList.add("hide");
         let task = {
           id: dragItem.getAttribute("data-id"),

@@ -25,14 +25,11 @@ class Person {
   getNextWeek() {
     let startDate = this.arrDate[0];
     startDate.setDate(this.arrDate[0].getDate() + 7);
-    console.log(this.arrDate[0].getDate());
-    console.log(startDate.toISOString().slice(0, 10));
     this.getCurrentWeek(startDate);
   }
   getLastWeek() {
     let startDate = this.arrDate[0];
     startDate.setDate(this.arrDate[0].getDate() - 7);
-    console.log(startDate.toISOString().slice(0, 10));
     this.getCurrentWeek(startDate);
   }
 
@@ -56,12 +53,10 @@ class Person {
         }
       });
     }
-    console.log(this.tasks);
   }
 
   deleteTask(id) {
     this.tasks = this.tasks.filter((task) => task.id !== id);
-    console.log(this.tasks);
   }
 
   getTasks(userId, currendDate) {
@@ -170,7 +165,6 @@ class Person {
       .getElementById("previous-button")
       .addEventListener("click", (e) => {
         e.preventDefault();
-        console.log("клик по левой кнопке");
         this.getLastWeek();
         this.render(true);
       });
@@ -179,7 +173,6 @@ class Person {
   eventListenerButtonNext() {
     document.getElementById("next-button").addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("клик по правой кнопке");
       this.getNextWeek();
       this.render(true);
     });

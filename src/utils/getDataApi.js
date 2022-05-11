@@ -6,7 +6,6 @@ class GetDataApi {
 
       return res.data;
     } catch (error) {
-      console.log("Could not fetch.", error.message);
       return false;
     }
   }
